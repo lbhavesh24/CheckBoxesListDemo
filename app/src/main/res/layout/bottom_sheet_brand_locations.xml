@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="6dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:paddingBottom="10dp"
+    android:layout_marginTop="10dp">
+
+    <TextView
+        android:id="@+id/lblApplyFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/apply_filter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivCloseBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:padding="5dp"
+        android:background="?android:selectableItemBackgroundBorderless"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/lblApplyFilter"
+        app:layout_constraintBottom_toBottomOf="@id/lblApplyFilter"
+        app:srcCompat="@drawable/ic_close" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblApplyFilter" />
+
+    <CheckBox
+        android:id="@+id/cbSelectAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/select_all"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvBrandNLocations"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:paddingBottom="8dp"
+        android:clipToPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbSelectAll"
+        app:layout_constraintBottom_toBottomOf="@id/tvAddBtn"
+        tools:itemCount="20"
+        tools:listitem="@layout/list_item_brand_n_locations"/>
+
+    <TextView
+        android:id="@+id/tvAddBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="10dp"
+        android:text="@string/apply"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:paddingBottom="11dp"
+        android:foreground="?android:selectableItemBackground"
+        android:background="@drawable/top_rounded_corners"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

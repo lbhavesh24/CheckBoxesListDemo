@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/applyFilterFragment">
+
+    <dialog
+        android:id="@+id/applyFilterFragment"
+        android:name="com.demo.app.fragments.ApplyFilterFragment"
+        android:label="ApplyFilterFragment" >
+        <action
+            android:id="@+id/openBrandFilterFragment"
+            app:destination="@id/brandFilterFragment" />
+        <action
+            android:id="@+id/openLocationsFilterFragment"
+            app:destination="@id/locationsFilterFragment" />
+        <action
+            android:id="@+id/openAccountFilterFragment"
+            app:destination="@id/accountFilterFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/brandFilterFragment"
+        android:name="com.demo.app.fragments.BrandFilterFragment"
+        android:label="BrandFilterFragment" />
+    <dialog
+        android:id="@+id/locationsFilterFragment"
+        android:name="com.demo.app.fragments.LocationsFilterFragment"
+        android:label="LocationsFilterFragment" />
+    <dialog
+        android:id="@+id/accountFilterFragment"
+        android:name="com.demo.app.fragments.AccountFilterFragment"
+        android:label="AccountFilterFragment" />
+</navigation>
