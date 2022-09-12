@@ -10,10 +10,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.demo.app.DataViewModel
-import com.demo.app.LocationNameListItem
-import com.demo.app.OnSelectAllCheckedListener
+import com.demo.app.*
 import com.demo.app.adapters.LocationListAdapter
+import com.demo.app.data.BrandNameListItem
+import com.demo.app.data.DataViewModel
+import com.demo.app.data.LocationNameListItem
 import com.demo.app.databinding.BottomSheetBrandLocationsBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -29,6 +30,7 @@ class LocationsFilterFragment:RoundedBottomSheetDialogFragment(), OnSelectAllChe
     private lateinit var locationsAdapter: LocationListAdapter
     private val viewModel by activityViewModels<DataViewModel>()
     private var locations:MutableList<LocationNameListItem> = mutableListOf()
+    private var selectedBrandsList:MutableList<BrandNameListItem> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,15 +92,37 @@ class LocationsFilterFragment:RoundedBottomSheetDialogFragment(), OnSelectAllChe
     }
 
     private fun observeData(){
+        viewModel.selectedBrandsList.observe(viewLifecycleOwner){
+            if (it.isNotEmpty()){
+                selectedBrandsList.clear()
+                selectedBrandsList.addAll(it)
+            }
+        }
+
         viewModel.accountsList.observe(viewLifecycleOwner){
-            if (!it.isNullOrEmpty()){
-                locations.clear()
-                it.forEach { list ->
-                    list.brandNameList.forEach{ brands ->
-                        locations.addAll(brands.locationNameList.toMutableList())
+            lifecycleScope.launch(Dispatchers.IO){
+                if (!it.isNullOrEmpty()){
+                    locations.clear()
+                    it.forEach { list ->
+                        list.brandNameList.forEach { brands ->
+                            if (selectedBrandsList.isNotEmpty()){
+                                selectedBrandsList.forEach { sl ->
+                                    if (sl.brandName == brands.brandName){
+                                        locations.addAll(brands.locationNameList)
+                                    }
+                                }
+                            }else {
+                                locations.addAll(brands.locationNameList)
+                            }
+                        }
+                    }
+                    withContext(Dispatchers.Main) {
+                        binding.cbSelectAll.isChecked = locations.filter {
+                            it.isSelected!!
+                        }.size == locations.size
+                        locationsAdapter.notifyItemRangeInserted(0, locations.size - 1)
                     }
                 }
-                locationsAdapter.notifyItemRangeInserted(0,locations.size -1)
             }
         }
     }

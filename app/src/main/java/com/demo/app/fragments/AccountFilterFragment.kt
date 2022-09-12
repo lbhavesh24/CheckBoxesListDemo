@@ -10,8 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.demo.app.DataViewModel
-import com.demo.app.HierarchyItem
+import com.demo.app.data.DataViewModel
+import com.demo.app.data.HierarchyItem
 import com.demo.app.OnSelectAllCheckedListener
 import com.demo.app.adapters.AccountsListAdapter
 import com.demo.app.databinding.BottomSheetBrandLocationsBinding
@@ -95,6 +95,9 @@ class AccountFilterFragment:RoundedBottomSheetDialogFragment(), OnSelectAllCheck
             if (!it.isNullOrEmpty()){
                 accountList.clear()
                 accountList.addAll(it)
+                binding.cbSelectAll.isChecked = accountList.filter { item ->
+                    item.isSelected!!
+                }.size == accountList.size
                 accountsAdapter.notifyItemRangeInserted(0,accountList.size -1)
             }
         }

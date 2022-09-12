@@ -1,6 +1,5 @@
 package com.demo.app.fragments
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.demo.app.DataViewModel
+import com.demo.app.data.DataViewModel
 import com.demo.app.R
 import com.demo.app.databinding.BottomSheetApplyFilterBinding
 

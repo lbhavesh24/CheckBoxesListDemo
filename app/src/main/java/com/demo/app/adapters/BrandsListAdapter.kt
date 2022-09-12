@@ -2,15 +2,10 @@ package com.demo.app.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.demo.app.BrandNameListItem
-import com.demo.app.DataViewModel
-import com.demo.app.HierarchyItem
+import com.demo.app.data.BrandNameListItem
 import com.demo.app.OnSelectAllCheckedListener
 import com.demo.app.databinding.ListItemBrandNLocationsBinding
-import javax.inject.Inject
 
 class BrandsListAdapter (private val brands:MutableList<BrandNameListItem>):
     RecyclerView.Adapter<BrandsListAdapter.ViewHolder>(){
@@ -18,8 +13,8 @@ class BrandsListAdapter (private val brands:MutableList<BrandNameListItem>):
 
     class ViewHolder constructor(private val binding:ListItemBrandNLocationsBinding):
             RecyclerView.ViewHolder(binding.root){
-                fun bind(list:MutableList<BrandNameListItem>,item: BrandNameListItem,
-                         adapter:BrandsListAdapter,listener:OnSelectAllCheckedListener){
+                fun bind(list:MutableList<BrandNameListItem>, item: BrandNameListItem,
+                         adapter:BrandsListAdapter, listener:OnSelectAllCheckedListener){
                     item.id = adapterPosition
                     binding.cbName.text = item.brandName
                     binding.cbName.isChecked = item.isSelected!!

@@ -1,7 +1,7 @@
-package com.demo.app
+package com.demo.app.data
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
+import com.demo.app.loadJSONFromAssets
 import com.google.gson.Gson
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject

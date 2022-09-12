@@ -10,11 +10,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.demo.app.BrandNameListItem
-import com.demo.app.DataViewModel
-import com.demo.app.HierarchyItem
+import com.demo.app.data.BrandNameListItem
+import com.demo.app.data.DataViewModel
+import com.demo.app.data.HierarchyItem
 import com.demo.app.OnSelectAllCheckedListener
-import com.demo.app.adapters.AccountsListAdapter
 import com.demo.app.adapters.BrandsListAdapter
 import com.demo.app.databinding.BottomSheetBrandLocationsBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -103,18 +102,18 @@ class BrandFilterFragment:RoundedBottomSheetDialogFragment(), OnSelectAllChecked
         viewModel.accountsList.observe(viewLifecycleOwner){
             if (!it.isNullOrEmpty()){
                 brands.clear()
-                it.forEachIndexed { index, item ->
+                it.forEach { item ->
                     if (selectedAccountsList.isNotEmpty()) {
-                        when {
-                            selectedAccountsList.size > 1 -> {
-                                if (item.accountNumber == selectedAccountsList[index].accountNumber)
-                                    brands.addAll(item.brandNameList)
-                            }
-                            item.accountNumber == selectedAccountsList[0].accountNumber ->
+                        selectedAccountsList.forEach { sl ->
+                            if (sl.accountNumber == item.accountNumber){
                                 brands.addAll(item.brandNameList)
+                            }
                         }
                     } else brands.addAll(item.brandNameList)
                 }
+                binding.cbSelectAll.isChecked = brands.filter { listItem ->
+                    listItem.isSelected!!
+                }.size == brands.size
                 brandsAdapter.notifyItemRangeInserted(0,brands.size -1)
             }
         }

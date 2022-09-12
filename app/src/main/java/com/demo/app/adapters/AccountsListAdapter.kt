@@ -3,10 +3,9 @@ package com.demo.app.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.demo.app.HierarchyItem
+import com.demo.app.data.HierarchyItem
 import com.demo.app.OnSelectAllCheckedListener
 import com.demo.app.databinding.ListItemBrandNLocationsBinding
-import javax.inject.Inject
 
 class AccountsListAdapter (private val accountList:MutableList<HierarchyItem>):
     RecyclerView.Adapter<AccountsListAdapter.ViewHolder>(){
@@ -14,8 +13,8 @@ class AccountsListAdapter (private val accountList:MutableList<HierarchyItem>):
 
     class ViewHolder constructor(private val binding:ListItemBrandNLocationsBinding):
             RecyclerView.ViewHolder(binding.root){
-                fun bind(list: MutableList<HierarchyItem>,item: HierarchyItem,
-                         adapter: AccountsListAdapter,listener:OnSelectAllCheckedListener){
+                fun bind(list: MutableList<HierarchyItem>, item: HierarchyItem,
+                         adapter: AccountsListAdapter, listener:OnSelectAllCheckedListener){
                     item.id = adapterPosition
                     binding.cbName.text = item.accountNumber
                     binding.cbName.isChecked = item.isSelected!!
