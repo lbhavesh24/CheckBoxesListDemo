@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.demo.app.*
+import com.demo.app.OnSelectAllCheckedListener
 import com.demo.app.adapters.LocationListAdapter
 import com.demo.app.data.BrandNameListItem
 import com.demo.app.data.DataViewModel
@@ -96,33 +96,28 @@ class LocationsFilterFragment:RoundedBottomSheetDialogFragment(), OnSelectAllChe
             if (it.isNotEmpty()){
                 selectedBrandsList.clear()
                 selectedBrandsList.addAll(it)
+                locations.clear()
+                selectedBrandsList.forEach { item ->
+                    locations.addAll(item.locationNameList)
+                }
+                locationsAdapter.notifyItemRangeInserted(0, locations.size - 1)
             }
         }
 
         viewModel.accountsList.observe(viewLifecycleOwner){
-            lifecycleScope.launch(Dispatchers.IO){
-                if (!it.isNullOrEmpty()){
+            if (!it.isNullOrEmpty()) {
+                if (selectedBrandsList.isEmpty()) {
                     locations.clear()
                     it.forEach { list ->
                         list.brandNameList.forEach { brands ->
-                            if (selectedBrandsList.isNotEmpty()){
-                                selectedBrandsList.forEach { sl ->
-                                    if (sl.brandName == brands.brandName){
-                                        locations.addAll(brands.locationNameList)
-                                    }
-                                }
-                            }else {
-                                locations.addAll(brands.locationNameList)
-                            }
+                            locations.addAll(brands.locationNameList)
                         }
                     }
-                    withContext(Dispatchers.Main) {
-                        binding.cbSelectAll.isChecked = locations.filter {
-                            it.isSelected!!
-                        }.size == locations.size
-                        locationsAdapter.notifyItemRangeInserted(0, locations.size - 1)
-                    }
+                    locationsAdapter.notifyItemRangeInserted(0, locations.size - 1)
                 }
+                binding.cbSelectAll.isChecked = locations.filter { item ->
+                    item.isSelected!!
+                }.size == locations.size
             }
         }
     }

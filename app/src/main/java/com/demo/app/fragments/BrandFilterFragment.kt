@@ -96,25 +96,26 @@ class BrandFilterFragment:RoundedBottomSheetDialogFragment(), OnSelectAllChecked
             if (it.isNotEmpty()){
                 selectedAccountsList.clear()
                 selectedAccountsList.addAll(it)
+                brands.clear()
+                selectedAccountsList.forEach { item ->
+                    brands.addAll(item.brandNameList)
+                }
+                brandsAdapter.notifyItemRangeInserted(0,brands.size -1)
             }
         }
 
         viewModel.accountsList.observe(viewLifecycleOwner){
             if (!it.isNullOrEmpty()){
-                brands.clear()
-                it.forEach { item ->
-                    if (selectedAccountsList.isNotEmpty()) {
-                        selectedAccountsList.forEach { sl ->
-                            if (sl.accountNumber == item.accountNumber){
-                                brands.addAll(item.brandNameList)
-                            }
-                        }
-                    } else brands.addAll(item.brandNameList)
+                if (selectedAccountsList.isEmpty()) {
+                    brands.clear()
+                    it.forEach { item ->
+                        brands.addAll(item.brandNameList)
+                    }
+                    brandsAdapter.notifyItemRangeInserted(0, brands.size - 1)
                 }
                 binding.cbSelectAll.isChecked = brands.filter { listItem ->
                     listItem.isSelected!!
                 }.size == brands.size
-                brandsAdapter.notifyItemRangeInserted(0,brands.size -1)
             }
         }
     }
